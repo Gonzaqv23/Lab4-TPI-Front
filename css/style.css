@@ -1,0 +1,20 @@
+.destino-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem;
+  max-width: 300px;
+  background-color: #f9f9f9;
+}
+button {
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #005fa3;
+}
