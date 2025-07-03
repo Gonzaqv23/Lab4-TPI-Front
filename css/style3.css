@@ -1,90 +1,91 @@
-.destino-card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 1rem;
-  margin: 1rem;
-  max-width: 300px;
-  background-color: #f9f9f9;
-}
-
-button {
-  width: 100%;
-  background-color: #b800cc;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  margin-top: 0.5rem;
-  border-radius: 4px;
-  cursor: pointer;
-}
-button:hover {
-  background-color: #a3004c;
-}
-
-
-body.login-box {
+/* Fondo general */
+body {
+  background: linear-gradient(to right, #4e54c8, #8f94fb);
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(to right, #4e54c8, #8f94fb);
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  min-height: 100vh;
 }
 
-.login-container{
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f4f4f4;
-  border-radius: 8px;
-  font-family: Arial, sans-serif;
-}
-
-.login-container h1 {
-  margin-bottom: 25px;
-  color: #333;
-}
-
-.login-container input {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 16px;
-  box-sizing: border-box;
-}
-
-
-
-header{
-   background-color: #713680;
-    color: white;
-    padding: 30px;
-    text-align: center;
-}
-
-header h1{
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+/* Header */
+.crudHeaders {
+  max-width: 800px;
+  margin: 30px auto 20px;
+  padding: 20px 30px;
+  background-color: #ffffffee; /* blanco semi-transparente */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   text-align: center;
-}
-/*style2*/
-.imagen {
-  border-radius: 10px;
-  margin-left: 20px; margin-top: 60px;
-  width: 300px;
-  height: 300px;
-  flex: 1 1 ;
-  transition: transform 0.3s ease;
-}
-section .div{
-  display: flex;
-  justify-content: center;
+  color: #4e54c8;
 }
 
-#destinosContainer .div img:hover{
-  transform: scale(1.02);
+/* Contenedores: formulario y tabla */
+.cajaCrud, .listas {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 25px 30px;
+  background-color: #ffffffee;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Títulos */
+.cajaCrud h2,
+.listas h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #4e54c8;
+}
+
+/* Formulario */
+#usuarioForm {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#usuarioForm input,
+#usuarioForm select,
+#usuarioForm button {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+/* Botón con estilo acorde */
+#usuarioForm button {
+  background-color: #4e54c8;
+  color: white;
+  border: none;
   cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#usuarioForm button:hover {
+  background-color: #373bc0;
+  transform: scale(1.02);
+}
+
+/* Tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table thead {
+  background-color: #4e54c8;
+  color: white;
+}
+
+table th,
+table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
 }

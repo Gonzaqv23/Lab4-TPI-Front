@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Administrar Destinos</title>
+  <link rel="stylesheet" href="/css/style3.css" />
+</head>
+<body>
+  <header class="crudHeaders">
+    <h1>Gestión de Destinos</h1>
+    <p id="adminSaludo"></p>
+  </header>
+
+  <main>
+    <section  class="cajaCrud">
+      <h2>Crear nuevo destino</h2>
+      <form id="destinoForm">
+        <input type="text" id="nombre" placeholder="Nombre" required minlength="5" maxlength="50" />
+        <input type="text" id="descripcion" placeholder="Descripción" required maxlength="100" />
+        <input type="text" id="pais" placeholder="País" required maxlength="100" />
+        <button type="submit">Crear destino</button>
+      </form>
+    </section>
+
+    <section class="listas">
+      <h2>Lista de destinos</h2>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>País</th>
+          </tr>
+        </thead>
+        <tbody id="destinosTabla"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script type="module">
+    document.addEventListener("DOMContentLoaded", async () => {
+      const token = sessionStorage.getItem("token");
+      const usuario = JSON.parse(sessionStorage.getItem("usuario"));
+      const saludo = document.getElementById("adminSaludo");
+      const tabla = document.getElementById("destinosTabla");
+      const form = document.getElementById("destinoForm");
+
+      if (usuario) {
+        saludo.textContent = `Hola admin ${usuario.nombre} ${usuario.apellido} 👋`;
+      }
+
+      async function cargarDestinos() {
+        try {
+          const res = await fetch("http://localhost:8000/destinos", {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+
+          if (!res.ok) throw new Error("No se pudieron obtener los destinos");
+
+          const data = await res.json();
+          tabla.innerHTML = "";
+          data.forEach(d => {
+            tabla.innerHTML += `
+              <tr>
+                <td>${d.nombre}</td>
+                <td>${d.descripcion}</td>
+                <td>${d.pais}</td>
+              </tr>`;
+          });
+        } catch (err) {
+          alert("Error: " + err.message);
+        }
+      }
+
+      await cargarDestinos();
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const nuevoDestino = {
+          nombre: document.getElementById("nombre").value,
+          descripcion: document.getElementById("descripcion").value,
+          pais: document.getElementById("pais").value
+        };
+
+        try {
+          const res = await fetch("http://localhost:8000/destinos", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(nuevoDestino)
+          });
+
+          if (!res.ok) throw new Error("Error al crear destino");
+
+          alert("Destino creado correctamente");
+          form.reset();
+          await cargarDestinos();
+        } catch (err) {
+          alert("Error: " + err.message);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Administrar Usuarios</title>
+  <link rel="stylesheet" href="/css/style3.css" />
+</head>
+<body>
+  <header  class="crudHeaders">
+    <h1>Gestión de Usuarios</h1>
+    <p id="adminSaludo"></p>
+  </header>
+
+  <main>
+    <!-- Formulario para crear usuario -->
+    <section class="cajaCrud">
+      <h2>Crear nuevo usuario</h2>
+      <form id="usuarioForm">
+        <input type="text" id="nombre" placeholder="Nombre" required minlength="2" maxlength="20" />
+        <input type="text" id="apellido" placeholder="Apellido" required minlength="2" maxlength="20" />
+        <input type="email" id="correo" placeholder="Correo electrónico" required />
+        <input type="password" id="password" placeholder="Contraseña" required minlength="8" />
+        <select id="rol" required>
+          <option value="" disabled selected>Seleccionar rol</option>
+          <option value="cliente">Cliente</option>
+          <option value="admin">Admin</option>
+        </select>
+        <button type="submit">Crear usuario</button>
+      </form>
+    </section>
+
+    <!-- Tabla de usuarios -->
+    <section class="listas">
+      <h2>Lista de usuarios registrados</h2>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Correo</th>
+            <th>Rol</th>
+          </tr>
+        </thead>
+        <tbody id="usuariosTabla"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script type="module">
+    document.addEventListener("DOMContentLoaded", async () => {
+      const token = sessionStorage.getItem("token");
+      const usuario = JSON.parse(sessionStorage.getItem("usuario"));
+      const saludo = document.getElementById("adminSaludo");
+
+      if (usuario) {
+        saludo.textContent = `Hola admin ${usuario.nombre} ${usuario.apellido} 👋`;
+      }
+
+      const form = document.getElementById("usuarioForm");
+      const tabla = document.getElementById("usuariosTabla");
+
+      // Listar usuarios
+      async function cargarUsuarios() {
+        try {
+          const res = await fetch("http://localhost:8000/usuarios", {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+
+          if (!res.ok) throw new Error("No se pudieron obtener usuarios");
+          const data = await res.json();
+
+          tabla.innerHTML = "";
+          data.forEach(u => {
+            tabla.innerHTML += `
+              <tr>
+                <td>${u.nombre}</td>
+                <td>${u.apellido}</td>
+                <td>${u.correo}</td>
+                <td>${u.rol}</td>
+              </tr>`;
+          });
+        } catch (err) {
+          alert("Error al cargar usuarios: " + err.message);
+        }
+      }
+
+      await cargarUsuarios();
+
+      // Crear usuario
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const nuevoUsuario = {
+          nombre: document.getElementById("nombre").value,
+          apellido: document.getElementById("apellido").value,
+          correo: document.getElementById("correo").value,
+          password: document.getElementById("password").value,
+          rol: document.getElementById("rol").value
+        };
+
+        try {
+          const res = await fetch("http://localhost:8000/usuarios", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(nuevoUsuario)
+          });
+
+          if (!res.ok) throw new Error("Error al crear usuario");
+
+          alert("Usuario creado correctamente");
+          form.reset();
+          await cargarUsuarios();
+        } catch (err) {
+          alert("Error: " + err.message);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

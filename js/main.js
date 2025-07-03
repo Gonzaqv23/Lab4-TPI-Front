@@ -29,7 +29,17 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Usuario guardado en sessionStorage:", response.usuario);
 
       alert(`¡Bienvenido ${response.usuario.nombre} ${response.usuario.apellido}!`);
-      window.location.href = "destinos.html";
+
+      const rol = response.usuario.rol.toLowerCase();
+
+      console.log(rol)
+
+      if (rol === "admin") {
+        window.location.href = "dashboard.html";
+      } else {
+        window.location.href = "destinos.html";
+      }
+
     } catch (err) {
       alert("Error de autenticación: " + err.message);
     }
