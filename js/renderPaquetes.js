@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const destinoId = params.get("destino");
 
   console.log("ID de destino recibido:", destinoId);
+  console.log(usuario)
 
   if (!destinoId) {
     alert("No se seleccionó ningún destino.");
@@ -66,7 +67,7 @@ window.mostrarFormulario = (paqueteId) => {
   document.getElementById(`formulario-${paqueteId}`).style.display = "block";
 };
 
-// ✅ Confirmar reserva
+// Confirmar reserva
 window.confirmarReserva = async (paqueteId) => {
   const cantidad = Number(document.getElementById(`cantidad-${paqueteId}`).value);
   
@@ -92,7 +93,8 @@ window.confirmarReserva = async (paqueteId) => {
   try {
     await reservasService.crear(reserva);
     alert("Reserva registrada correctamente 🎉");
-    document.getElementById(`formulario-${paqueteId}`).style.display = "none";
+    window.location.href = "/reservas.html";
+    //document.getElementById(`formulario-${paqueteId}`).style.display = "none";
   } catch (error) {
     alert("Error al registrar reserva: " + error.message);
   }

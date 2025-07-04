@@ -1,11 +1,4 @@
-.destino-card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 1rem;
-  margin: 1rem;
-  max-width: 300px;
-  background-color: #f9f9f9;
-}
+
 button {
   background-color: #0077cc;
   color: white;
@@ -35,11 +28,23 @@ body {
   align-items: center;
 }
 
-.login-container, #paquetesContainer, #destinosContainer,
+.login-container, #paquetesContainer, .destino-card,
 #adminHeader, .admin-menu, .admin-estadisticas {
   max-width: 400px;
   margin: 0 auto;
-  margin-bottom: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 40px;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+}
+
+.paquete-card {
+    margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 40px;
   padding: 20px;
   background-color: #f4f4f4;
   border-radius: 8px;
@@ -56,27 +61,7 @@ body {
   font-family: Arial, sans-serif;
 }
 
-.crudHeaders {
-  max-width: 400px;
-  margin: 0 auto;
-  margin-bottom: 10px;
-  padding: 20px;
-  background-color: #f4f4f4;
-  border-radius: 8px;
-  font-family: Arial, sans-serif;
-}
-
-.cajaCrud {
-  max-width: 400px;
-  margin: 0 auto;
-  margin-bottom: 10px;
-  padding: 20px;
-  background-color: #f4f4f4;
-  border-radius: 8px;
-  font-family: Arial, sans-serif;
-}
-
-#saludo-header{
+.saludo-header{
   margin: 0 auto;
   padding: 20px;
   background-color: #f4f4f4;
