@@ -5,15 +5,32 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginError = document.getElementById("loginError");
   const container = document.querySelector(".login-container");
 
-  const usuarioLogueado = sessionStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
+  const usuario = JSON.parse(sessionStorage.getItem("usuario") || "{}");
 
-  if (usuarioLogueado) {
-    container.innerHTML = `<h2>Sesión activa</h2><p>Redirigiendo a destinos...</p>`;
-    setTimeout(() => {
-      window.location.href = "destinos.html";
-    }, 1500);
+  if (token) {
+
+    fetch("http://localhost:8000/usuarios", {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(res => {
+        if (!res.ok) throw new Error("Token expirado");
+        
+        container.innerHTML = `<h2>Sesión activa</h2><p>Redirigiendo...</p>`;
+        const rol = usuario.rol?.toLowerCase();
+        const destino = rol === "admin" ? "dashboard.html" : "destinos.html";
+        setTimeout(() => (window.location.href = destino), 1000);
+      })
+      .catch(err => {
+        
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("usuario");
+        console.warn("Token inválido o expirado. Sesión limpia.");
+      });
+
     return;
-  }
+}
+
 
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();

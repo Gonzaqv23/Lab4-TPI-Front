@@ -74,6 +74,38 @@
 
       await cargarDestinos();
 
+      tabla.querySelectorAll("tr").forEach(row => {
+        row.addEventListener("click", () => {
+          const id = row.getAttribute("data-id");
+          seleccionarDestino(id);
+        });
+      });
+
+      async function seleccionarDestino(id) {
+        try {
+          const res = await fetch(`http://localhost:8000/destinos/${id}`, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          if (!res.ok) throw new Error("Destino no encontrado");
+          const destino = await res.json();
+
+          // Llenar el formulario con los datos del destino seleccionado
+          document.getElementById("nombre").value = destino.nombre;
+          document.getElementById("descripcion").value = destino.descripcion;
+          document.getElementById("pais").value = destino.pais;
+
+          // Guardar el id para saber que estamos editando
+          form.dataset.editingId = id;
+
+          // Cambiar el botón para actualizar en lugar de crear
+          form.querySelector("button[type='submit']").textContent = "Actualizar destino";
+
+        } catch (err) {
+          alert("Error: " + err.message);
+        }
+      }
+
+
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
 

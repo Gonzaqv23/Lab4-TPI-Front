@@ -1,77 +1,44 @@
-
-button {
-  background-color: #0077cc;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  margin-top: 0.5rem;
-  border-radius: 4px;
-  cursor: pointer;
-  width: 100%;
-}
-button:hover {
-  background-color: #005fa3;
-}
-
-h1 {
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(to right, #4e54c8, #8f94fb);
   height: 100vh;
+  background: linear-gradient(to right, #4e54c8, #8f94fb);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.login-container, #paquetesContainer, .destino-card,
-#adminHeader, .admin-menu, .admin-estadisticas {
-  max-width: 400px;
-  margin: 0 auto;
-  margin-top: 20px;
+.page-container {
+  text-align: center;
+}
+
+.titulo {
+  font-size: 2.5rem;
   margin-bottom: 20px;
-  margin-right: 40px;
-  padding: 20px;
-  background-color: #f4f4f4;
-  border-radius: 8px;
-  font-family: Arial, sans-serif;
+  color: #ffffff;
+  letter-spacing: 1px;
 }
 
-.paquete-card {
-    margin-top: 20px;
-  margin-bottom: 20px;
-  margin-right: 40px;
-  padding: 20px;
-  background-color: #f4f4f4;
-  border-radius: 8px;
-  font-family: Arial, sans-serif;
+.titulo::first-letter {
+  color: #ffcc00;
+  font-size: 6rem;
 }
 
-.listas {
+.login-container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   max-width: 400px;
+  width: 100%;
   margin: 0 auto;
-  margin-bottom: 10px;
-  padding: 20px;
-  background-color: #f4f4f4;
-  border-radius: 8px;
-  font-family: Arial, sans-serif;
 }
 
-.saludo-header{
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f4f4f4;
-  border-radius: 8px;
-  font-family: Arial, sans-serif;
-}
-
-.login-container h1 {
-  margin-bottom: 25px;
+.login-container h2 {
+  font-size: 1.8rem;
   color: #333;
+  margin-bottom: 20px;
 }
 
 .login-container input {
@@ -82,4 +49,27 @@ body {
   border-radius: 6px;
   font-size: 16px;
   box-sizing: border-box;
+}
+
+button {
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #005fa3;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+  font-size: 0.9rem;
 }

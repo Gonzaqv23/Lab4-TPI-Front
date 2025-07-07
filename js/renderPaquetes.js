@@ -62,12 +62,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-// Mostrar formulario
+
 window.mostrarFormulario = (paqueteId) => {
   document.getElementById(`formulario-${paqueteId}`).style.display = "block";
 };
 
-// Confirmar reserva
+
 window.confirmarReserva = async (paqueteId) => {
   const cantidad = Number(document.getElementById(`cantidad-${paqueteId}`).value);
   
@@ -92,9 +92,13 @@ window.confirmarReserva = async (paqueteId) => {
 
   try {
     await reservasService.crear(reserva);
-    alert("Reserva registrada correctamente 🎉");
-    window.location.href = "/reservas.html";
-    //document.getElementById(`formulario-${paqueteId}`).style.display = "none";
+    alert("Reserva registrada correctamente.");
+
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("usuario");
+
+    window.location.href = "index.html";
+
   } catch (error) {
     alert("Error al registrar reserva: " + error.message);
   }

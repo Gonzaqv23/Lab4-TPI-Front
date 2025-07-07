@@ -3,25 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <title>Panel de Administración</title>
-  <link rel="stylesheet" href="/css/style2.css" />
+  <link rel="stylesheet" href="/css/style3.css" />
 </head>
 <body>
-  <header id="adminHeader">
+ 
+  <header class="cajaHeaders">
     <h1>Panel de Administración</h1>
     <p id="adminSaludo"></p>
   </header>
 
   <main>
-    <!-- Sección de botones de gestión -->
-    <section class="admin-menu">
-      <h2>Gestión del sistema</h2>
-      <button id="btnUsuarios">Administrar Usuarios</button>
-      <button id="btnDestinos">Administrar Destinos</button>
-      <button id="btnPaquetes">Administrar Paquetes</button>
-    </section>
 
-    <!-- Sección de estadísticas -->
-    <section class="admin-estadisticas">
+    <section class="cajaCrud">
+      <h2>Gestión del sistema</h2>
+      <div class="botonera">
+        <button id="btnUsuarios">Administrar Usuarios</button>
+        <button id="btnDestinos">Administrar Destinos</button>
+        <button id="btnPaquetes">Administrar Paquetes</button>
+      </div>
+      </section>
+
+    <section class="listas">
       <h2>Estadísticas</h2>
       <div id="estadisticasContainer">
         <p>Cargando estadísticas...</p>

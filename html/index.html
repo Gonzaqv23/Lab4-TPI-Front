@@ -7,17 +7,21 @@
   <link rel="stylesheet" href="/css/style2.css"/>
 </head>
 <body>
-  
-  <div class="login-container">
-    <h1>Iniciar sesión</h1>
-    <form id="loginForm">
-      <input type="email" id="email" placeholder="Email" required />
-      <input type="password" id="password" placeholder="Contraseña" required />
-      <button type="submit">Ingresar</button>
-    </form>
-    <p id="loginError" class="error" style="display: none;"></p>
-  </div>
+  <div class="page-container">
+    <div class="titulo">
+      <h1>Journey Viajes</h1>
+    </div>
 
+    <div class="login-container">
+      <h2>Iniciar sesión</h2>
+      <form id="loginForm">
+        <input type="email" id="email" placeholder="Email" required />
+        <input type="password" id="password" placeholder="Contraseña" required />
+        <button type="submit">Ingresar</button>
+      </form>
+      <p id="loginError" class="error" style="display: none;"></p>
+    </div>
+  </div>
   <script src="/js/authService.js" type="module"></script>
   <script src="/js/main.js" type="module"></script>
 </body>
