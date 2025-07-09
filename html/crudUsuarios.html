@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <title>Administrar Usuarios</title>
   <link rel="stylesheet" href="/css/style3.css" />
+  <script type="module" src="/js/crudUsuarios.js"></script>
 </head>
-<script type="module" src="/js/crudUsuarios.js"></script>
 <body>
   <header class="cajaHeaders">
     <h1>Gestión de Usuarios</h1>
@@ -15,7 +15,7 @@
   <main>
     <section class="cajaCrud">
       <h2>Crear nuevo usuario</h2>
-      <form id="usuarioForm">
+      <form id="crudForm">
 
         <input type="text" id="nombre" placeholder="Nombre" required minlength="2" maxlength="20" />
         <input type="text" id="apellido" placeholder="Apellido" required minlength="2" maxlength="20" />

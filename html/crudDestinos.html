@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>Administrar Destinos</title>
   <link rel="stylesheet" href="/css/style3.css" />
+  <script type="module" src="/js/crudDestinos.js"></script>
 </head>
 <body>
   <header class="cajaHeaders">
@@ -14,11 +15,14 @@
   <main>
     <section  class="cajaCrud">
       <h2>Crear nuevo destino</h2>
-      <form id="destinoForm">
+      <form id="crudForm">
         <input type="text" id="nombre" placeholder="Nombre" required minlength="5" maxlength="50" />
         <input type="text" id="descripcion" placeholder="Descripción" required maxlength="100" />
         <input type="text" id="pais" placeholder="País" required maxlength="100" />
-        <button type="submit">Crear destino</button>
+        <button type="submit" id="btnCrear">Crear destino</button>
+        <button type="button" id="btnActualizar" style="display: none;">Actualizar destino</button>
+        <button type="button" id="btnEliminar" style="display: none;">Eliminar destino</button>
+
       </form>
     </section>
 
@@ -37,104 +41,5 @@
     </section>
   </main>
 
-  <script type="module">
-    document.addEventListener("DOMContentLoaded", async () => {
-      const token = sessionStorage.getItem("token");
-      const usuario = JSON.parse(sessionStorage.getItem("usuario"));
-      const saludo = document.getElementById("adminSaludo");
-      const tabla = document.getElementById("destinosTabla");
-      const form = document.getElementById("destinoForm");
-
-      if (usuario) {
-        saludo.textContent = `Hola admin ${usuario.nombre} ${usuario.apellido} 👋`;
-      }
-
-      async function cargarDestinos() {
-        try {
-          const res = await fetch("http://localhost:8000/destinos", {
-            headers: { Authorization: `Bearer ${token}` }
-          });
-
-          if (!res.ok) throw new Error("No se pudieron obtener los destinos");
-
-          const data = await res.json();
-          tabla.innerHTML = "";
-          data.forEach(d => {
-            tabla.innerHTML += `
-              <tr>
-                <td>${d.nombre}</td>
-                <td>${d.descripcion}</td>
-                <td>${d.pais}</td>
-              </tr>`;
-          });
-        } catch (err) {
-          alert("Error: " + err.message);
-        }
-      }
-
-      await cargarDestinos();
-
-      tabla.querySelectorAll("tr").forEach(row => {
-        row.addEventListener("click", () => {
-          const id = row.getAttribute("data-id");
-          seleccionarDestino(id);
-        });
-      });
-
-      async function seleccionarDestino(id) {
-        try {
-          const res = await fetch(`http://localhost:8000/destinos/${id}`, {
-            headers: { Authorization: `Bearer ${token}` }
-          });
-          if (!res.ok) throw new Error("Destino no encontrado");
-          const destino = await res.json();
-
-          // Llenar el formulario con los datos del destino seleccionado
-          document.getElementById("nombre").value = destino.nombre;
-          document.getElementById("descripcion").value = destino.descripcion;
-          document.getElementById("pais").value = destino.pais;
-
-          // Guardar el id para saber que estamos editando
-          form.dataset.editingId = id;
-
-          // Cambiar el botón para actualizar en lugar de crear
-          form.querySelector("button[type='submit']").textContent = "Actualizar destino";
-
-        } catch (err) {
-          alert("Error: " + err.message);
-        }
-      }
-
-
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const nuevoDestino = {
-          nombre: document.getElementById("nombre").value,
-          descripcion: document.getElementById("descripcion").value,
-          pais: document.getElementById("pais").value
-        };
-
-        try {
-          const res = await fetch("http://localhost:8000/destinos", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify(nuevoDestino)
-          });
-
-          if (!res.ok) throw new Error("Error al crear destino");
-
-          alert("Destino creado correctamente");
-          form.reset();
-          await cargarDestinos();
-        } catch (err) {
-          alert("Error: " + err.message);
-        }
-      });
-    });
-  </script>
 </body>
 </html>

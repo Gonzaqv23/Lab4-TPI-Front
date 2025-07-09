@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     statsContainer.innerHTML = `<p>Error al cargar estadísticas: ${err.message}</p>`;
   }
 
-  // CRUD Botones
+  
   document.getElementById("btnUsuarios").addEventListener("click", () => {
     window.location.href = "crudUsuarios.html";
   });
@@ -45,4 +45,51 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("btnPaquetes").addEventListener("click", () => {
     window.location.href = "crudPaquetes.html";
   });
+
+  const reservasContainer = document.getElementById("reservasContainer");
+
+  try {
+    const resReservas = await fetch("http://localhost:8000/reservas/detalladas", {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+
+    if (!resReservas.ok) throw new Error("No se pudieron obtener las reservas");
+
+    const reservas = await resReservas.json();
+
+    console.log(reservas);
+
+    if (reservas.length === 0) {
+      reservasContainer.innerHTML = "<p>No hay reservas registradas.</p>";
+    } else {
+      reservasContainer.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Paquete</th>
+              <th>Fecha</th>
+              <th>Personas</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${reservas.map(r => `
+              <tr>
+                <td>${r.usuario.nombre} ${r.usuario.apellido}</td>
+                <td>${r.paquete.nombre}</td>
+                <td>${r.fecha_reserva}</td>
+                <td>${r.cantidad_personas}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+  } catch (err) {
+    reservasContainer.innerHTML = `<p>Error al cargar reservas: ${err.message}</p>`;
+  }
+
+
 });

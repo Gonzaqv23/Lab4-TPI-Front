@@ -37,23 +37,29 @@ body {
 }
 
 
-#usuarioForm {
+#crudForm {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-#usuarioForm input,
-#usuarioForm select,
-#usuarioForm button {
+#crudForm input,
+#crudForm select,
+#crudForm button {
   padding: 10px;
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 16px;
 }
 
+#crudForm label {
+  padding: 10px;
+  border-radius: 6px;
+  border-top: 1px solid #ccc;
+  font-size: 16px;
+}
 
-#usuarioForm button {
+#crudForm button {
   background-color: #4e54c8;
   color: white;
   border: none;
@@ -62,7 +68,7 @@ body {
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-#usuarioForm button:hover {
+#crudForm button:hover {
   background-color: #373bc0;
   transform: scale(1.02);
 }

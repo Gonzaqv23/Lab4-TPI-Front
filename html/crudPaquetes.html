@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>Administrar Paquetes</title>
   <link rel="stylesheet" href="/css/style3.css" />
+  <script type="module" src="/js/crudPaquetes.js"></script>
 </head>
 <body>
   <header class="cajaHeaders">
@@ -14,7 +15,7 @@
   <main>
     <section class="cajaCrud">
       <h2>Crear nuevo paquete</h2>
-      <form id="paqueteForm">
+      <form id="crudForm">
         <select id="destino_id" required>
           <option value="" disabled selected>Seleccionar destino</option>
         </select>
@@ -25,7 +26,10 @@
         <input type="date" id="fecha_inicio" required />
         <label>Fecha fin:</label>
         <input type="date" id="fecha_fin" required />
-        <button type="submit">Crear paquete</button>
+        <button type="submit" id="btnCrear">Crear paquete</button>
+        <button type="button" id="btnActualizar" style="display: none;">Actualizar paquete</button>
+        <button type="button" id="btnEliminar" style="display: none;">Eliminar paquete</button>
+
       </form>
     </section>
 
@@ -47,102 +51,5 @@
     </section>
   </main>
 
-  <script type="module">
-
-    document.addEventListener("DOMContentLoaded", async () => {
-
-      async function cargarDestinosEnSelect() {
-        const select = document.getElementById("destino_id");
-        try {
-          const response = await fetch("http://localhost:8000/destinos", {
-            headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` }
-          });
-          const destinos = await response.json();
-
-          console.log("Cargando destinos", destinos)
-
-          destinos.forEach(destino => {
-            const option = document.createElement("option");
-            option.value = destino.id;
-            option.textContent = destino.nombre;
-            select.appendChild(option);
-        }); 
-      } catch (error) {
-          console.error("Error al cargar destinos:", error);
-      }}
-
-      await cargarDestinosEnSelect();
-
-      const token = sessionStorage.getItem("token");
-      const usuario = JSON.parse(sessionStorage.getItem("usuario"));
-      const saludo = document.getElementById("adminSaludo");
-      const tabla = document.getElementById("paquetesTabla");
-      const form = document.getElementById("paqueteForm");
-
-      if (usuario) {
-        saludo.textContent = `Hola admin ${usuario.nombre} ${usuario.apellido} 👋`;
-      }
-
-      async function cargarPaquetes() {
-        try {
-          const res = await fetch("http://localhost:8000/paquetes", {
-            headers: { Authorization: `Bearer ${token}` }
-          });
-
-          if (!res.ok) throw new Error("No se pudieron obtener paquetes");
-
-          const data = await res.json();
-          tabla.innerHTML = "";
-          data.forEach(p => {
-            tabla.innerHTML += `
-              <tr>
-                <td>${p.destino_id}</td>
-                <td>${p.nombre}</td>
-                <td>$${p.precio}</td>
-                <td>${p.cupo}</td>
-                <td>${p.fecha_inicio}</td>
-                <td>${p.fecha_fin}</td>
-              </tr>`;
-          });
-        } catch (err) {
-          alert("Error: " + err.message);
-        }
-      }
-
-      await cargarPaquetes();
-
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const nuevoPaquete = {
-          destino_id: Number(document.getElementById("destino_id").value),
-          nombre: document.getElementById("nombre").value,
-          precio: parseFloat(document.getElementById("precio").value),
-          cupo: parseInt(document.getElementById("cupo").value),
-          fecha_inicio: document.getElementById("fecha_inicio").value,
-          fecha_fin: document.getElementById("fecha_fin").value
-        };
-
-        try {
-          const res = await fetch("http://localhost:8000/paquetes", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify(nuevoPaquete)
-          });
-
-          if (!res.ok) throw new Error("Error al crear paquete");
-
-          alert("Paquete creado correctamente");
-          form.reset();
-          await cargarPaquetes();
-        } catch (err) {
-          alert("Error: " + err.message);
-        }
-      });
-    });
-  </script>
 </body>
 </html>
