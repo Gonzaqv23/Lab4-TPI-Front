@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Destinos disponibles</title>
   <link rel="stylesheet" href="/css/style3.css">
+  <link rel="stylesheet" href="/css/carrousel.css">
 </head>
 <body>
   <header class="cajaHeaders">
@@ -11,11 +12,21 @@
     <p id="usuarioSaludo"></p>
   </header>
 
+  <section class="carrusel">
+
+  </section>
+
   <section id="destinosContainer">
 
   </section>
 
+  <script src="/js/carrusel.js" type="module"></script>
+  <script type="module">
+    import { Carrusel } from '/js/carrusel.js';
+    Carrusel()
+  </script>
   <script src="/js/destinosService.js" type="module"></script>
   <script src="/js/renderDestinos.js" type="module"></script>
+  
 </body>
 </html>
